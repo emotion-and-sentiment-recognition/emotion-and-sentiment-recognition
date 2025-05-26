@@ -16,6 +16,7 @@ dependencies = [
     "pandas>=2.2.3",
     "psutil>=7.0.0",
     "pyarrow>=20.0.0",
+    "sacremoses>=0.1.1",
     "scikit-learn>=1.6.1",
     "scipy>=1.13.1",
     "sentencepiece>=0.2.0",
