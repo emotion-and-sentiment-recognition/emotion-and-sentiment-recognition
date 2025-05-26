@@ -1,0 +1,28 @@
+MODELS:
+  HERBERT: "allegro/herbert-large-cased"
+  POLISH_ROBERTA: "sdadas/polish-roberta-large-v2"
+  XLM_ROBERTA: "xlm-roberta-large"
+
+
+TRAINING_PARAMS:
+  BATCH_SIZE_TRAIN: 1
+  BATCH_SOZE_EVAL: 2
+  GRADIENT_ACCUMULATION: 16
+  MAX_LENGTH: 256
+  EPOCHS: 3
+  LEARNING_RATE: 2e-5
+  WARMUP_STEPS: 100
+
+DATA:
+  DATA_PATH: "./data/"
+  MODELS_PATH: "./models/"
+  RESULTS_PATH: "./results/"
+  TRAIN_FILE_NAME: "train.csv"
+  TEST_FILE_NAME: "test.csv"
+  VALIDATION_FILE_NAME: "val.csv"
+
+DEVICE: ["mps", "cpu"]
+
+EMOTION_LABELS: ['Joy', 'Trust', 'Anticipation', 'Surprise', 'Fear','Sadness', 'Disgust', 'Anger']
+SENTIMENT_LABELS: ['Positive', 'Negative', 'Neutral']
+ALL_LABELS: ['Joy', 'Trust', 'Anticipation', 'Surprise', 'Fear','Sadness', 'Disgust', 'Anger', 'Positive', 'Negative', 'Neutral']
