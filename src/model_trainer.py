@@ -76,19 +76,23 @@ class ModelTrainer():
             gradient_accumulation_steps=(int)(self.config['TRAINING_PARAMS']['GRADIENT_ACCUMULATION']),
             warmup_steps=(int)(self.config['TRAINING_PARAMS']['WARMUP_STEPS']),
             weight_decay=0.01,
+            
             logging_dir=f'logs/{self.model_name.replace("/", "_")}',
             logging_steps=50,
             eval_strategy="steps",
             eval_steps=200 if val_dataset else None,
+            
             save_strategy="steps",
             save_steps=400,
             load_best_model_at_end=True if val_dataset else False,
-            fp16=False,
-            gradient_checkpointing=True,
-            dataloader_num_workers=0,
+            save_total_limit=2 ,
+            
+            fp16=True,
+            gradient_checkpointing=False,
+            dataloader_num_workers=4,
             remove_unused_columns=False,
+            
             report_to=None,
-            save_total_limit=2 
         )
         
         trainer = Trainer(
