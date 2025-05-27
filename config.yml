@@ -1,11 +1,15 @@
 MODELS:
-  HERBERT: "allegro/herbert-large-cased"
-  POLISH_ROBERTA: "sdadas/polish-roberta-large-v2"
-  XLM_ROBERTA: "xlm-roberta-large"
+#  HERBERT: "allegro/herbert-large-cased"
+  # ROBERTA: "sdadas/polish-roberta-base-v1"
+  # XLM_ROBERTA: "xlm-roberta-large"
+  # ATP3: "Azurro/APT3-275M-Base"
+  # GPT2: "sdadas/polish-gpt2-small"
+  E5: "sdadas/mmlw-e5-small"
+  PLT5: "allegro/plt5-small"
 
 
 TRAINING_PARAMS:
-  BATCH_SIZE_TRAIN: 2
+  BATCH_SIZE_TRAIN: 4
   BATCH_SIZE_EVAL: 8
   GRADIENT_ACCUMULATION: 4
   MAX_LENGTH: 256

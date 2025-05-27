@@ -18,9 +18,9 @@ def main():
     logger.info('Loading data...')
     data_processor = DataProcessor('config.yml')
     
-    # examples = data_processor.load_data('data/train.csv')
-    examples = data_processor.load_data('data/test.csv')
-    
+    examples = data_processor.load_data('data/val.csv')
+    # train_examples = data_processor.load_data('data/train.csv')
+    # val_examples = data_processor.load_data('data/val.csv')
 
     logger.info('Splitting data into training and validation sets...')
     
