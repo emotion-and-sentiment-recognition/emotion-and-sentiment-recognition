@@ -1,16 +1,17 @@
 MODELS:
-#  HERBERT: "allegro/herbert-large-cased"
-  # ROBERTA: "sdadas/polish-roberta-base-v1"
+  # HERBERT: "allegro/herbert-large-cased"
+  # ROBERTA: "sdadas/polish-roberta-base-v2"
   # XLM_ROBERTA: "xlm-roberta-large"
   # ATP3: "Azurro/APT3-275M-Base"
   # GPT2: "sdadas/polish-gpt2-small"
-  E5: "sdadas/mmlw-e5-small"
-  PLT5: "allegro/plt5-small"
+  # E5: "sdadas/mmlw-e5-small"
+  # PLT5: "allegro/plt5-small"
+  DISTILROBERTA: "sdadas/polish-distilroberta"
 
 
 TRAINING_PARAMS:
-  BATCH_SIZE_TRAIN: 4
-  BATCH_SIZE_EVAL: 8
+  BATCH_SIZE_TRAIN: 16
+  BATCH_SIZE_EVAL: 32
   GRADIENT_ACCUMULATION: 4
   MAX_LENGTH: 256
   EPOCHS: 3
@@ -18,12 +19,12 @@ TRAINING_PARAMS:
   WARMUP_STEPS: 100
 
 DATA:
-  DATA_PATH: "./data/"
+  DATA_PATH: "../data/"
   MODELS_PATH: "./models/"
   RESULTS_PATH: "./results/"
-  TRAIN_FILE_NAME: "train.csv"
-  TEST_FILE_NAME: "test.csv"
-  VALIDATION_FILE_NAME: "val.csv"
+  RAW_TRAIN_FILE_NAME: "raw_data/train.csv"
+  RAW_TEST_FILE_NAME: "raw_data/test.csv"
+  RAW_VAL_FILE_NAME: "raw_data/val.csv"
 
 DEVICE: ["GPU", "CPU"]
 

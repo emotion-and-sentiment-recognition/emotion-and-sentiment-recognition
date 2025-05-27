@@ -1,70 +1,69 @@
+import pandas as pd
 from typing import List, Dict
-import csv
 from tools import load_config, Logger
-
+from sentence_transformers import SentenceTransformer
 
 class DataProcessor:
     def __init__(self, config_path: str):
         self.config = load_config(config_path)
         self.logger = Logger(__name__)
-    def load_data(self, filepath: str) -> List[Dict]:
-        self.logger.info(f'Loading files from {filepath}...')
-        
-        examples = []
-        current_sentences = []
-        current_labels = []
-        
-        data = []
-                
-        with open(filepath, 'r', encoding='utf-8') as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                data.append(row)
-        
-        for row in data:
-            if row['text'].startswith('#'):
-                if current_sentences and current_labels:
-                    examples.extend(self._create_examples(current_sentences, current_labels))
-            
-            else:
-                current_sentences.append(row['text'])
-                current_labels.append([row[label] == 'True' for label in self.config['ALL_LABELS']])
-                
-        self.logger.info(f'Loaded {len(examples)} examples from {filepath}...')
-        return examples
-
-    def _is_label_line(self, line: str) -> bool:
-        parts = line.split()
-        return (len(parts) == 11 and all(part in ['True', 'False'] for part in parts))
     
-    def _create_examples(self, sentences: List[str], labels: List[List[bool]]) -> List[Dict]:
-        examples = []
-        
-        for i, (sentence, label) in enumerate(zip(sentences, labels)):
-            context = []
-            
-            for j in range(max(0, i-2), i):
-                context.append(sentences[j])
-                
-            context.append(f'[COMMENT_START] {sentence} [COMMENT_END]')
-            
-            for j in range(i+1, min(len(sentences), i+3)):
-                context.append(sentences[j])
-        
-            text = ' '.join(context)
-            
-            example = {
-                'text': text,
-                'labels': {
-                    self.config['ALL_LABELS'][i]: label[i] for i in range(len(label))
-                },
-                'sentence_id': i
-            }
-            examples.append(example)
-        
-        return examples
+    def _delete_stops(self, df: pd.DataFrame) -> pd.DataFrame:
+        self.logger.info('Deleting stops...')
+        df = df[~df['text'].astype(str).str.startswith('#')]
+        df = df.reset_index(drop=True)
 
+        self.logger.info('Stops deleted...')
+        return df
+    
+    def _encode_labels(self, df: pd.DataFrame) -> pd.DataFrame:
+        self.logger.info('Encoding labels...')
+        for col in self.config['ALL_LABELS']:
+            df[col] = df[col].apply(lambda x: 1 if x else 0)
+        self.logger.info('Labels encoded...')
+        return df
+
+    def _embed_text(self, df: pd.DataFrame) -> pd.DataFrame:
+        model = SentenceTransformer('sdadas/st-polish-paraphrase-from-distilroberta')
+        
+        self.logger.info('Embedding text...')
+        corpus = [str(df.loc[index, 'text']) for index in df.index.to_list()]
+        embeddings = model.encode(corpus)
+
+        self.logger.info('Converting embeddings to dataframe...')
+        embedding_column_names = [f'embedding_{i}' for i in range(embeddings.shape[1])]
+        
+        self.logger.info('Concatenating embeddings with original dataframe...')
+        df_embeddings = pd.DataFrame(embeddings, columns=embedding_column_names)
+        df = pd.concat([df_embeddings, df], axis=1)
+
+        self.logger.info('Text embedded...')
+        return df
+
+    def _rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
+        self.logger.info('Renaming columns to lowercase...')
+        df.columns = df.columns.str.lower()
+        self.logger.info('Columns renamed...')
+        return df
+    
+    def _transform(self, name: str) -> pd.DataFrame:
+        df = pd.read_csv(self.config['DATA']['DATA_PATH'] + self.config['DATA'][name])
+
+        df = self._delete_stops(df=df)
+        df = self._encode_labels(df=df)
+        
+        return df
+        df = self._embed_text(df=df)
+        df = self._rename_columns(df=df)
+        
+        return df
+    def __call__(self, name: str) -> pd.DataFrame:
+        return self._transform(name=name)
+        
 # if __name__ == '__main__':
-#     processor = DataProcessor("config.yml")
-#     examples = processor.load_data('data/test.csv')
-#     print(examples[0:10])
+#     df = DataProcessor('config.yml')('RAW_TRAIN_FILE_NAME')
+#     print(df.head())
+#     print(df.iloc[:, 780:])
+#     print(df.columns)
+#     print(df.shape)
+    
