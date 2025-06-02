@@ -67,30 +67,30 @@ emotion-and-sentiment-recognition/
 
 - Positive, Negative, Neutral
 
-## Wyniki
-
 ### Najlepsze wyniki F1-macro:
 
-- **Klasyczne ML**: ~0.56 (różne modele dla różnych emocji)
-- **Sieci neuronowe**: ~0.57 (na poziomie pojedynczych zdań)
-- **Transformery**: **0.62** (najlepszy wynik)
+- **Klasyczne ML**: **0.672** (średnia harmoniczna: 0.691 dla tekstów, 0.654 dla zdań)
+- **Sieci neuronowe**: 0.574 (średnia: 0.559 dla tekstów, 0.588 dla zdań)
+- **Transformery**: 0.625(tylko F1-macro, bez podziału)
 
 ### Porównanie z konkursem:
 
-Zwycięzcy konkursu PolEval 2024 Task 2 osiągnęli F1-macro w zakresie 0.75-0.81. Nasze najlepsze podejście (transformery) z wynikiem 0.62 osiąga około 77% wydajności zwycięskiego rozwiązania, co pokazuje, że istnieje przestrzeń do dalszej optymalizacji.
+Zwycięzcy konkursu PolEval 2024 Task 2 osiągnęli F1-macro w zakresie 0.75-0.81. Nasze najlepsze podejście (klasyczne ML) z wynikiem 0.672 osiąga około 83% wydajności zwycięskiego rozwiązania.
 
 ## Wnioski
 
-1. **Modele transformerowe** wyraźnie przewyższają klasyczne podejścia w zadaniu wieloetykietowej klasyfikacji emocji
-2. **Kontekst ma znaczenie** - specjalne oznaczanie granic komentarzy poprawia wyniki
-3. **Agregacja predykcji** z poziomu zdań do recenzji pozostaje wyzwaniem
-4. **Pretrenowane modele językowe** dla języka polskiego (jak RoBERTa) stanowią solidną podstawę dla zadań NLP
-5. **Różnica wobec zwycięzców** (18 punktów procentowych) sugeruje, że kluczowe mogą być:
+## Wnioski
 
-- Techniki ensemble'owania wielu modeli
-- Specjalizowane architektury dla różnych poziomów analizy (zdania vs. teksty)
-- Dodatkowa optymalizacja hiperparametrów
-- Augmentacja danych lub dodatkowe techniki regularyzacji
+1. Najlepsze wyniki w naszym eksperymencie osiągnęły **modele klasyczne ML** (F1-macro 0.672), przewyższając transformery (0.625) i sieci neuronowe (0.574).
+2. **Modele transformerowe** nadal są silnym podejściem i pokazują dobrą jakość, zwłaszcza biorąc pod uwagę potencjał dalszej optymalizacji.
+3. **Kontekst ma znaczenie** - specjalne oznaczanie granic komentarzy poprawia wyniki.
+4. **Agregacja predykcji** z poziomu zdań do recenzji pozostaje wyzwaniem.
+5. **Pretrenowane modele językowe** dla języka polskiego (jak RoBERTa) stanowią solidną podstawę dla zadań NLP.
+6. **Różnica wobec zwycięzców** (około 10 procentowych do najlepszych modeli ML w konkursie) sugeruje, że kluczowe mogą być:
+   - Techniki ensemble'owania wielu modeli
+   - Specjalizowane architektury dla różnych poziomów analizy (zdania vs. teksty)
+   - Dodatkowa optymalizacja hiperparametrów
+   - Augmentacja danych lub dodatkowe techniki regularyzacji
 
 ## Możliwe kierunki rozwoju
 
