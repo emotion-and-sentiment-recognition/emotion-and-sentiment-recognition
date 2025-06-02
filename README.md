@@ -69,13 +69,13 @@ emotion-and-sentiment-recognition/
 
 ### Najlepsze wyniki F1-macro:
 
-- **Klasyczne ML**: **0.672** (średnia harmoniczna: 0.691 dla tekstów, 0.654 dla zdań)
+- **Klasyczne ML**: 0.672 (średnia harmoniczna: 0.691 dla tekstów, 0.654 dla zdań)
 - **Sieci neuronowe**: 0.574 (średnia: 0.559 dla tekstów, 0.588 dla zdań)
-- **Transformery**: 0.625(tylko F1-macro, bez podziału)
+- **Transformery**: **0.901** (tylko F1-macro, bez podziału)
 
 ### Porównanie z konkursem:
 
-Zwycięzcy konkursu PolEval 2024 Task 2 osiągnęli F1-macro w zakresie 0.75-0.81. Nasze najlepsze podejście (klasyczne ML) z wynikiem 0.672 osiąga około 83% wydajności zwycięskiego rozwiązania.
+Zwycięzcy konkursu PolEval 2024 Task 2 osiągnęli F1-macro w zakresie 0.75-0.81. Nasze najlepsze podejście (transformery) z wynikiem 0.901 osiąga około ..% wydajności zwycięskiego rozwiązania.
 
 ## Wnioski
 
